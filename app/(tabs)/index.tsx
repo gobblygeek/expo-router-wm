@@ -1,18 +1,23 @@
-import { ExternalLink } from "@tamagui/lucide-icons";
-import { Anchor, H2, Paragraph, XStack, YStack } from "tamagui";
+import { H2, Paragraph, XStack, YStack } from "tamagui";
 
 export default function TabOneScreen() {
   return (
-    <YStack f={1} ai="center" gap="$8" px="$10" pt="$5">
-      <H2>Settings</H2>
-      <XStack
-        ai="center"
-        jc="center"
-        fw="wrap"
-        gap="$1.5"
-        pos="absolute"
-        b="$8"
-      ></XStack>
+    <YStack f={1} ai="center" gap="$8" px="$5" pt="$10">
+      <H2 letterSpacing="$5">Settings</H2>
+      <Paragraph>
+        This is an example of a tabbed layout with a couple of tabs. You can
+        navigate between them by tapping on the tabs at the bottom of the
+        screen.
+      </Paragraph>
+      <SettingField customKey={"ProjectWC"} />
     </YStack>
+  );
+}
+
+function SettingField({ customKey }: { customKey: string }) {
+  return (
+    <XStack gap="$5" ai="center">
+      <Paragraph f="$6">{customKey}</Paragraph>
+    </XStack>
   );
 }
