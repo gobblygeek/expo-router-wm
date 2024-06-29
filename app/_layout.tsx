@@ -11,6 +11,7 @@ import {
 } from "@expo-google-fonts/playfair-display";
 import { Eater_400Regular } from "@expo-google-fonts/eater";
 import { Stack } from "expo-router";
+import { Toast, useToastController, useToastState } from "@tamagui/toast";
 
 import { useColorScheme } from "react-native";
 
@@ -45,6 +46,16 @@ export default function RootLayout() {
 
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         </Stack>
+        <ToastProvider>
+          <Toast>
+            <Toast.Title />
+            <Toast.Description />
+            <Toast.Action />
+            <Toast.Close />
+          </Toast>
+
+          <ToastViewport />
+        </ToastProvider>
       </ThemeProvider>
     </TamaguiProvider>
   );

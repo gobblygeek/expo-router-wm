@@ -7,7 +7,6 @@ const playfairFace = {
     italic: "PlayfairDisplay_400Regular_Italic",
   },
 };
-//const eaterFace =  {normal: {normal: 'Eater_400Regular'},
 const playfairFont = createFont({
   // font-family name(s) for web use via CSS
   family: "Playfair Display, serif",
@@ -100,8 +99,10 @@ const eaterFont = createFont({
 
 export const tamaguiConfig = createTamagui({
   fonts: {
+    //for some wierd reason, body is not picking up the font, but heading is
     body: playfairFont,
     heading: playfairFont,
+    //same for these two. Also playfiar and eater are working in heading.
     playfair: playfairFont,
     eaterFont: eaterFont,
   },
