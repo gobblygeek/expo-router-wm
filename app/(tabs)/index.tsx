@@ -1,9 +1,10 @@
 import { H2, Button, XStack, YStack, Input, H6 } from "tamagui";
-import { Toast, useToastController, useToastState } from "@tamagui/toast";
+import { useToastController } from "@tamagui/toast";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState } from "react";
 import { Spinner } from "tamagui";
 import { H5 } from "tamagui";
+import { CurrentToast } from "app/CurrentToast";
 
 export default function TabOneScreen() {
   return (
@@ -14,6 +15,7 @@ export default function TabOneScreen() {
       <SettingField customKey={"ProjectSpan"} />
       <SettingField customKey={"SprintWC"} />
       <SettingField customKey={"SprintSpan"} />
+      <CurrentToast />
     </YStack>
   );
 }
@@ -30,6 +32,7 @@ function SettingField({ customKey }: { customKey: string }) {
     SprintSpan: "Sprint Time (minutes)",
   };
   const fieldName = storageEnum[customKey];
+  const toast = useToastController();
   const getStorageValue = async (customKey) => {
     try {
       const value = await AsyncStorage.getItem(customKey);
@@ -41,17 +44,32 @@ function SettingField({ customKey }: { customKey: string }) {
     } catch (e) {
       // error reading value
       setValue("storage error");
+      toast.show("There was a problem getting your data.", {
+        message: "Please try again.",
+      });
     }
   };
-  const setStorageValue = async (customKey, value) => {
+  const setStorageValue = async (customKey) => {
     setStatus("submitting");
-    setValue(value);
     try {
       await AsyncStorage.setItem(customKey, value);
       setStatus("submitted");
+      toast.show("Your settings have been updated.", {
+        message: "You may now navigate away.",
+        native: false,
+        duration: 3000,
+      });
     } catch (e) {
       // saving error
       setStatus("off");
+      setValue("not set");
+      if (toast && toast.show && typeof toast.show === "function") {
+        toast.show("There was a problem saving your data.", {
+          message: e.message,
+          native: false,
+          duration: 3000,
+        });
+      }
     }
   };
   getStorageValue(customKey);
@@ -69,7 +87,7 @@ function SettingField({ customKey }: { customKey: string }) {
         variant="outlined"
         theme="pink"
         icon={status === "submitting" ? () => <Spinner /> : undefined}
-        onPress={() => setStorageValue(customKey, value)}
+        onPress={() => setStorageValue(customKey)}
       >
         <H6>Update</H6>
       </Button>

@@ -1,6 +1,6 @@
-import { Link, Tabs } from "expo-router";
-import { Button, useTheme } from "tamagui";
-import { Atom, AudioWaveform, Cog } from "@tamagui/lucide-icons";
+import { Tabs } from "expo-router";
+import { useTheme } from "tamagui";
+import { Beef, Cog } from "@tamagui/lucide-icons";
 
 export default function TabLayout() {
   const theme = useTheme();
@@ -9,6 +9,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: theme.pink9Light.val,
+        tabBarActiveBackgroundColor: theme.blue5Light.val,
       }}
     >
       <Tabs.Screen
@@ -20,11 +21,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="feed"
         options={{
-          title: "Tab Two",
+          title: "Feed",
           headerShown: false,
-          tabBarIcon: ({ color }) => <AudioWaveform color={color} />,
+          tabBarIcon: ({ color }) => <Beef color={color} />,
         }}
       />
     </Tabs>
